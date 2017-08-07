@@ -1,0 +1,10 @@
+
+.DS_Storegit
+.idea/
+JenkinsSelenium.iml
+Screenshots/
+TestPacks/
+TestReports/
+config.xml
+extentreport.html
+target/
