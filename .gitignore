@@ -6,5 +6,5 @@ Screenshots/
 TestPacks/
 TestReports/
 config.xml
---extentreport.html
+#extentreport.html
 target/
