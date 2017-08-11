@@ -35,9 +35,9 @@ public class ExcelReaderUtility {
             // load file
             FileInputStream fis =new FileInputStream(src);
             // Load workbook
-            XSSFWorkbook wb=new XSSFWorkbook(fis);
+            XSSFWorkbook workBook =new XSSFWorkbook(fis);
             // Load sheet- Here we are loading first sheetonly
-            XSSFSheet sheet1= wb.getSheetAt(0);
+            XSSFSheet sheet1= workBook.getSheetAt(0);
 
             for (Row row : sheet1)
             {
@@ -175,12 +175,17 @@ public class ExcelReaderUtility {
 
         testCaseId = getCellValue(parameterRow.getCell(0)).trim();
         methodName = getCellValue(parameterRow.getCell(1)).trim();
+
         // Check the formatting of the inputfile, if the test description column is missing
         // and a test data parameter is present, reset the start column for data to 2.
         if(getCellValue(_workSheet.getRow(parameterRowIndex + 1).getCell(2)).equals(""))
+        {
             testDescription = getCellValue(parameterRow.getCell(2)).trim();
-        else
+        }else
+        {
             testParemeterStartcolumn = 2;
+        }
+
         testData.TestCaseId = testCaseId;
         testData.TestMethod = methodName;
         testData.TestDescription = testDescription;

@@ -6,10 +6,7 @@ import Entities.RetrievedTestValues;
 import Entities.TestEntity;
 import org.apache.commons.io.FileUtils;
 
-import org.openqa.selenium.Cookie;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
@@ -27,19 +24,29 @@ import static java.lang.System.err;
  */
 public class SeleniumDriverUtility extends BaseClass {
 
-    public WebDriver Driver;
     private Enums.BrowserType browserType;
     private Boolean _isDriverRunning;
     public RetrievedTestValues retrievedTestValues;
     public String DriverExceptionDetail = "";
     static int screenShotCounter;
+    private DesiredCapabilities capabilies;
 
     public SeleniumDriverUtility() {
 
         _isDriverRunning = false;
 
-        startDriver();
-        Driver.get(environment.toString());
+        capabilies = new DesiredCapabilities();
+     }
+
+    public SeleniumDriverUtility(Enums.BrowserType selectedBrowser) {
+        retrievedTestValues = new RetrievedTestValues();
+
+        _isDriverRunning = false;
+        browserType = selectedBrowser;
+
+        capabilies = new DesiredCapabilities();
+        capabilies.setBrowserName(browserType.toString());
+        capabilies.setPlatform(Platform.ANY);
 
     }
 
@@ -84,13 +91,16 @@ public class SeleniumDriverUtility extends BaseClass {
     public void startDriver() {
         System.setProperty("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.Jdk14Logger");
 
+        if(browserType == null){
+            browserType = appConfig.resolveBrowserType();
+        }
         switch (browserType) {
             case IE:
 
-                DesiredCapabilities cap = new DesiredCapabilities();
-                cap.setCapability(InternetExplorerDriver.ENABLE_PERSISTENT_HOVERING, false);
+                //DesiredCapabilities cap = new DesiredCapabilities();
+                capabilies.setCapability(InternetExplorerDriver.ENABLE_PERSISTENT_HOVERING, false);
 
-                Driver = new InternetExplorerDriver(cap);
+                Driver = new InternetExplorerDriver();
                 _isDriverRunning = true;
                 break;
 
@@ -100,7 +110,8 @@ public class SeleniumDriverUtility extends BaseClass {
                 break;
 
             case Chrome:
-                Driver = new ChromeDriver();
+                //Driver = new ChromeDriver(capabilies);
+                Driver = new ChromeDriver(capabilies);
                 _isDriverRunning = true;
                 break;
 
@@ -112,6 +123,10 @@ public class SeleniumDriverUtility extends BaseClass {
         Driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
         Driver.manage().timeouts().pageLoadTimeout(120, TimeUnit.SECONDS);
         Driver.manage().timeouts().setScriptTimeout(1, TimeUnit.SECONDS);
+
+        String URL = environment.PageUrl;
+        //Driver.get(URL);
+
         Driver.manage().window().maximize();
 
     }
@@ -158,7 +173,8 @@ public class SeleniumDriverUtility extends BaseClass {
         screenShotFolderCounter = inScreenShotFolderCounter;
     }
 
-    public static void incrementScreenShotFolderCounter() {
+    public static void incrementScreenShotFolderCounter()
+    {
         screenShotFolderCounter++;
     }
 

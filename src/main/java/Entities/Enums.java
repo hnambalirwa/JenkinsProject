@@ -35,7 +35,7 @@ public class Enums
         // DEV[FirstPageURL,FirstDatabaseConnectionString]
         
         INT("http://google.in"),
-        UAT("http://google.com")
+        UAT("http://www.siamusic.net/")
         ;
         
         

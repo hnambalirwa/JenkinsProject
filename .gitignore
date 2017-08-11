@@ -6,5 +6,10 @@ Screenshots/
 TestPacks/
 TestReports/
 config.xml
-#extentreport.html
+extentreport.html
 target/
+ErrorTestLog.txt
+InfoTestLog.txt
+RunId.txt
+KeywordDrivenTestReports
+CSVReports
