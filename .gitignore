@@ -3,9 +3,10 @@
 .idea/
 JenkinsSelenium.iml
 Screenshots/
-TestPacks/
+#TestPacks/
 TestReports/
 config.xml
 extentreport.html
 target/
 RunId.txt
+NumberOfTestsRun.txt
