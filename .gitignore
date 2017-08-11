@@ -8,8 +8,4 @@ TestReports/
 config.xml
 extentreport.html
 target/
-ErrorTestLog.txt
-InfoTestLog.txt
 RunId.txt
-KeywordDrivenTestReports
-CSVReports
